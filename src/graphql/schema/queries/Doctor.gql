@@ -1,0 +1,13 @@
+type Query {
+  getDoctors: GetDoctorsPayload!
+  findDoctors(filter: FindDoctorInput!): FindDoctorsPayload!
+}
+
+type GetDoctorsPayload {
+  doctors: [Doctor!]!
+}
+
+type FindDoctorsPayload {
+  doctors: [Doctor!]!
+  count: Int!
+}

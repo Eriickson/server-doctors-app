@@ -1,0 +1,7 @@
+type Mutation {
+  createDoctor(doctor: DoctorInput!): CreateDoctorPayload
+}
+
+type CreateDoctorPayload {
+  msg: String
+}

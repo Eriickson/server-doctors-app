@@ -1,0 +1,58 @@
+scalar Date
+
+type Doctor {
+  name: String!
+  lastname: String!
+  yearsExperiences: Int!
+  reviews: [Review!]!
+  specialties: [String!]!
+  ubications: [String!]!
+  calendar: [Calendar!]
+  imageNumber: Int!
+}
+
+type Review {
+  username: String
+  comment: String
+  score: Int
+}
+
+type Calendar {
+  date: Date
+  schedule: [Times]
+}
+
+type Times {
+  time: String
+  patient: ID
+}
+
+input DoctorInput {
+  name: String!
+  lastname: String!
+  yearsExperiences: Int!
+  specialties: [String!]!
+  ubications: [String!]!
+}
+
+input FindDoctorInput {
+  fullname: String
+  specialty: String
+  province: String
+}
+
+input ReviewInput {
+  username: String!
+  comment: String!
+  score: Int!
+}
+
+input CalendarInput {
+  date: Date
+  schedule: [TimesInput]
+}
+
+input TimesInput {
+  time: String
+  patient: ID
+}
