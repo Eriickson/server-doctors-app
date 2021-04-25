@@ -25,6 +25,18 @@ const doctorSchema = new Schema({
   specialties: [String],
   ubications: [String],
   imageNumber: Number,
+  calendar: [
+    {
+      date: String,
+      schedule: [
+        {
+          time: String,
+          patient: String,
+          note: String,
+        },
+      ],
+    },
+  ],
 });
 
 export const Doctor = model("Doctor", doctorSchema);

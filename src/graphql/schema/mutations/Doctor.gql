@@ -1,7 +1,12 @@
 type Mutation {
   createDoctor(doctor: DoctorInput!): CreateDoctorPayload
+  scheduleAppointment(idDoctor: ID!, appointment: CalendarInput!): ScheduleAppointment!
 }
 
 type CreateDoctorPayload {
+  msg: String
+}
+
+type ScheduleAppointment {
   msg: String
 }

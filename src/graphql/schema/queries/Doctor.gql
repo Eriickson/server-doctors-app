@@ -1,10 +1,14 @@
 type Query {
   getDoctors: GetDoctorsPayload!
+  getDoctor(id: ID): GetDoctorPayload
   findDoctors(filter: FindDoctorInput!): FindDoctorsPayload!
 }
 
 type GetDoctorsPayload {
   doctors: [Doctor!]!
+}
+type GetDoctorPayload {
+  doctor: Doctor!
 }
 
 type FindDoctorsPayload {

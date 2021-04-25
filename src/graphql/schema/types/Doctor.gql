@@ -1,6 +1,7 @@
 scalar Date
 
 type Doctor {
+  id: ID!
   name: String!
   lastname: String!
   yearsExperiences: Int!
@@ -9,6 +10,8 @@ type Doctor {
   ubications: [String!]!
   calendar: [Calendar!]
   imageNumber: Int!
+  province: String!
+  scoreAvg: Float!
 }
 
 type Review {
@@ -18,13 +21,14 @@ type Review {
 }
 
 type Calendar {
-  date: Date
+  date: String
   schedule: [Times]
 }
 
 type Times {
   time: String
   patient: ID
+  note: String
 }
 
 input DoctorInput {
@@ -48,11 +52,12 @@ input ReviewInput {
 }
 
 input CalendarInput {
-  date: Date
-  schedule: [TimesInput]
+  date: String!
+  schedule: TimesInput!
 }
 
 input TimesInput {
-  time: String
-  patient: ID
+  time: String!
+  patient: ID!
+  note: String!
 }

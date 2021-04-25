@@ -1,5 +1,5 @@
 import { Doctor } from "../../../database";
-import faker from "faker";
+import faker, { lorem } from "faker";
 
 interface CreateDoctorArgs {
   doctor: {
@@ -8,6 +8,18 @@ interface CreateDoctorArgs {
     yearsExperiences: number;
     specialties: string[];
     ubications: string[];
+  };
+}
+
+interface ScheduleAppointmentArgs {
+  idDoctor: string;
+  appointment: {
+    date: string;
+    schedule: {
+      time: string;
+      patient: string;
+      note: string;
+    };
   };
 }
 
@@ -39,6 +51,19 @@ export default {
           msg: "Doctor creado satisfactoriamente.",
         };
       } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async scheduleAppointment(_: any, { idDoctor, appointment }: ScheduleAppointmentArgs) {
+      console.log(appointment);
+
+      try {
+        const doctorFound: any = await Doctor.findById(idDoctor);
+
+        if (!doctorFound) throw new Error("Este doctor no existe");
+      } catch (err) {
+        console.log(err);
+
         throw new Error(err);
       }
     },
