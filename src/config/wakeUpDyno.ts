@@ -12,7 +12,6 @@ const isStopTime = ({ stopTimes }: { stopTimes: IStopTimes }) => {
 
   // Check if a start and end time are supplied.
   if (!start || !end) {
-    console.log("WARNING: Both a start/end stop time must be defined.");
     return true;
   }
 

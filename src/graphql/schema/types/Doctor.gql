@@ -21,14 +21,16 @@ type Review {
 }
 
 type Calendar {
+  id: ID
   date: String
-  schedule: [Times]
+  schedule: Times
 }
 
 type Times {
   time: String
   patient: ID
   note: String
+  typeAppointment: String
 }
 
 input DoctorInput {
@@ -58,6 +60,6 @@ input CalendarInput {
 
 input TimesInput {
   time: String!
-  patient: ID!
   note: String!
+  typeAppointment: String!
 }

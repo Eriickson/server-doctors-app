@@ -11,8 +11,6 @@ export async function resizeImage(
   try {
     await sharp(input).resize({ width, height }).toFile(output);
   } catch (err) {
-    console.log("Error al redimencionar", err);
-
     throw new Error("Ha ocurrido un error al redimencionar la imagen");
   }
 }

@@ -10,6 +10,7 @@ export function startMongoose(): void {
       useFindAndModify: false,
     })
     .then(() => {
+      /* eslint-disable no-console */
       console.log("Conectada");
     })
     .catch(err => {

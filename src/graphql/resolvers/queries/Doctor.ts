@@ -47,6 +47,15 @@ export default {
                   { $size: "$reviews" },
                 ],
               },
+              calendar: {
+                $map: {
+                  input: "$calendar",
+                  as: "item",
+                  in: {
+                    $mergeObjects: ["$$item", { id: "$$item._id" }],
+                  },
+                },
+              },
             },
           },
         ]);
@@ -61,7 +70,7 @@ export default {
     async findDoctors(_: any, { filter }: FindDoctorsArgs) {
       let filterMatch: { [key: string]: string | RegExp | object }[] = [{}];
 
-      if (filter.fullname) filterMatch = [...filterMatch, { fullname: new RegExp(filter.fullname) }];
+      if (filter.fullname) filterMatch = [...filterMatch, { fullname: new RegExp(filter.fullname, "i") }];
       if (filter.province) filterMatch = [...filterMatch, { province: filter.province }];
       if (filter.specialty) filterMatch = [...filterMatch, { specialties: { $in: [filter.specialty] } }];
 
@@ -100,8 +109,6 @@ export default {
             },
           },
         ]);
-
-        console.log(doctorFounds);
 
         return {
           doctors: doctorFounds,

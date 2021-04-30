@@ -1,5 +1,6 @@
 import { Doctor } from "../../../database";
-import faker, { lorem } from "faker";
+import faker from "faker";
+import { Types } from "mongoose";
 
 interface CreateDoctorArgs {
   doctor: {
@@ -17,10 +18,14 @@ interface ScheduleAppointmentArgs {
     date: string;
     schedule: {
       time: string;
-      patient: string;
       note: string;
     };
   };
+}
+
+interface CancelAppointmentArgs {
+  idDoctor: string;
+  idAppointment: string;
 }
 
 export default {
@@ -55,15 +60,66 @@ export default {
       }
     },
     async scheduleAppointment(_: any, { idDoctor, appointment }: ScheduleAppointmentArgs) {
-      console.log(appointment);
-
       try {
-        const doctorFound: any = await Doctor.findById(idDoctor);
+        const doctorFound: any = await Doctor.aggregate([
+          {
+            $match: {
+              _id: Types.ObjectId(idDoctor),
+            },
+          },
+          {
+            $project: {
+              calendar: {
+                $map: {
+                  input: "$calendar",
+                  as: "item",
+                  in: {
+                    $concat: ["$$item.date", " ", "$$item.schedule.time"],
+                  },
+                },
+              },
+            },
+          },
+        ]);
 
         if (!doctorFound) throw new Error("Este doctor no existe");
-      } catch (err) {
-        console.log(err);
 
+        const filterAppointment = doctorFound[0].calendar?.filter(
+          (item: any) => item === `${appointment.date} ${appointment.schedule.time}`,
+        );
+
+        if (filterAppointment.length) throw new Error("Ya existe una cita para este horario");
+
+        await Doctor.findOneAndUpdate(
+          { _id: idDoctor },
+          {
+            $push: {
+              calendar: {
+                ...appointment,
+                schedule: {
+                  ...appointment.schedule,
+                  patient: `${faker.name.findName()} ${faker.name.lastName()}`,
+                },
+              },
+            },
+          },
+        );
+
+        return {
+          msg: "Su cita ha sido reservada",
+        };
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async cancelAppointment(_: any, { idDoctor, idAppointment }: CancelAppointmentArgs) {
+      try {
+        await Doctor.findOneAndUpdate({ _id: idDoctor }, { $pull: { calendar: { _id: idAppointment } } });
+
+        return {
+          msg: "Cita cancelada",
+        };
+      } catch (err) {
         throw new Error(err);
       }
     },

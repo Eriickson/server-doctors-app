@@ -1,6 +1,7 @@
 type Mutation {
   createDoctor(doctor: DoctorInput!): CreateDoctorPayload
   scheduleAppointment(idDoctor: ID!, appointment: CalendarInput!): ScheduleAppointment!
+  cancelAppointment(idDoctor: ID!, idAppointment: ID!): CancelAppointmentPayload!
 }
 
 type CreateDoctorPayload {
@@ -8,5 +9,9 @@ type CreateDoctorPayload {
 }
 
 type ScheduleAppointment {
+  msg: String
+}
+
+type CancelAppointmentPayload {
   msg: String
 }

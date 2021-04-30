@@ -28,13 +28,12 @@ const doctorSchema = new Schema({
   calendar: [
     {
       date: String,
-      schedule: [
-        {
-          time: String,
-          patient: String,
-          note: String,
-        },
-      ],
+      schedule: {
+        time: String,
+        patient: String,
+        note: String,
+        typeAppointment: String,
+      },
     },
   ],
 });
