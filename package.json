@@ -1,5 +1,5 @@
 {
-  "name": "server-automarket-rd-v2.0",
+  "name": "prueba",
   "version": "1.0.0",
   "description": "",
   "main": "out/index.js",
@@ -54,6 +54,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.9",
